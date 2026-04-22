@@ -1,0 +1,395 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* OursBook global styles with dynamic theming */
+@layer base {
+  :root {
+    /* Default theme (OursBook) */
+    --color-primary: #6366F1;
+    --color-primary-dark: #4F46E5;
+    --color-primary-light: #818CF8;
+    --color-secondary: #F59E0B;
+    --color-secondary-dark: #D97706;
+    --color-accent: #10B981;
+    --color-accent-dark: #059669;
+    --color-black: #000000;
+    --color-dark-gray: #141414;
+    --color-medium-gray: #2F2F2F;
+    --color-light-gray: #B3B3B3;
+    --color-white: #FFFFFF;
+  }
+
+  * {
+    @apply border-theme-medium-gray;
+  }
+  
+  body {
+    @apply bg-theme-black text-theme-white;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  @media (min-width: 768px) {
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-theme-dark-gray;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-theme-medium-gray rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-theme-light-gray;
+  }
+
+  /* Hide scrollbar for carousel */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Responsive text sizes */
+  @media (max-width: 640px) {
+    html {
+      font-size: 14px;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 1024px) {
+    html {
+      font-size: 15px;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    html {
+      font-size: 16px;
+    }
+  }
+}
+
+@layer components {
+  /* OursBook button variants with dynamic theming */
+  .btn-primary {
+    @apply bg-theme-primary hover:bg-theme-primary-dark text-white font-semibold py-2 px-6 rounded-oursbook transition-colors duration-200;
+  }
+
+  .btn-secondary {
+    @apply bg-theme-medium-gray hover:bg-theme-light-gray hover:text-theme-black text-white font-semibold py-2 px-6 rounded-oursbook transition-colors duration-200;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent border border-theme-light-gray hover:bg-theme-light-gray hover:text-theme-black text-theme-light-gray font-semibold py-2 px-6 rounded-oursbook transition-colors duration-200;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-theme-dark-gray rounded-oursbook shadow-card;
+  }
+
+  .card-hover {
+    @apply hover:shadow-card-hover transition-shadow duration-200;
+  }
+
+  /* Input styles */
+  .input {
+    @apply bg-theme-medium-gray border border-theme-light-gray text-white placeholder-theme-light-gray rounded-oursbook px-4 py-2 focus:outline-none focus:ring-2 focus:ring-theme-primary focus:border-transparent;
+  }
+
+  /* Carousel specific styles */
+  .carousel-container {
+    @apply relative overflow-visible;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .carousel-container {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .carousel-track {
+    @apply flex transition-transform duration-500 ease-in-out;
+  }
+
+  .carousel-arrow {
+    @apply absolute top-1/2 transform -translate-y-1/2 z-10 bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-200;
+  }
+
+  @media (min-width: 640px) {
+    .carousel-arrow {
+      @apply p-3;
+    }
+  }
+
+  .carousel-arrow-left {
+    @apply left-1;
+  }
+
+  @media (min-width: 640px) {
+    .carousel-arrow-left {
+      @apply left-2;
+    }
+  }
+
+  .carousel-arrow-right {
+    @apply right-1;
+  }
+
+  @media (min-width: 640px) {
+    .carousel-arrow-right {
+      @apply right-2;
+    }
+  }
+
+  /* Featured card expansion */
+  .featured-card {
+    @apply relative transition-all duration-300 ease-out cursor-pointer;
+  }
+
+  .featured-card:hover {
+    @apply transform scale-105;
+  }
+
+  .featured-card.expanded {
+    @apply transform scale-125;
+    transform-origin: center top;
+    animation: cardExpand 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    z-index: 30 !important; /* Below indicators */
+  }
+
+  .featured-card.expanded.origin-left {
+    transform-origin: left top;
+  }
+
+  .featured-card.expanded.origin-right {
+    transform-origin: right top;
+  }
+
+  .featured-card.expanded .card-content {
+    @apply opacity-100;
+    animation: fadeInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+  }
+
+  .card-content {
+    @apply opacity-0 transition-opacity duration-300;
+  }
+
+  /* Button hover effects */
+  .btn-primary:hover {
+    @apply transform scale-105 shadow-lg;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-secondary:hover {
+    @apply transform scale-105;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Carousel arrow animations */
+  .carousel-arrow {
+    @apply absolute top-1/2 transform -translate-y-1/2 z-20 bg-black bg-opacity-70 hover:bg-opacity-90 text-white p-2 rounded-full transition-all duration-200 shadow-lg;
+  }
+
+  @media (min-width: 640px) {
+    .carousel-arrow {
+      @apply p-3;
+    }
+  }
+
+  .carousel-arrow:hover {
+    @apply transform -translate-y-1/2 scale-110;
+  }
+
+  .carousel-arrow-left {
+    @apply -left-4;
+  }
+
+  @media (min-width: 640px) {
+    .carousel-arrow-left {
+      @apply -left-6;
+    }
+  }
+
+  .carousel-arrow-right {
+    @apply -right-4;
+  }
+
+  @media (min-width: 640px) {
+    .carousel-arrow-right {
+      @apply -right-6;
+    }
+  }
+
+  /* Show arrows only on carousel hover */
+  .carousel-container:hover .carousel-arrow {
+    @apply opacity-100;
+  }
+
+  /* Carousel indicators */
+  .carousel-indicators {
+    position: relative !important;
+    z-index: 9999 !important;
+  }
+
+  .carousel-indicators > * {
+    position: relative !important;
+    z-index: 9999 !important;
+  }
+
+  /* Loading pulse animation */
+  .pulse-glow {
+    animation: pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Stagger animation for lists */
+  .stagger-item {
+    animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .stagger-item:nth-child(1) { animation-delay: 0ms; }
+  .stagger-item:nth-child(2) { animation-delay: 50ms; }
+  .stagger-item:nth-child(3) { animation-delay: 100ms; }
+  .stagger-item:nth-child(4) { animation-delay: 150ms; }
+  .stagger-item:nth-child(5) { animation-delay: 200ms; }
+  .stagger-item:nth-child(6) { animation-delay: 250ms; }
+
+  /* Loading states */
+  .skeleton {
+    @apply animate-pulse bg-theme-medium-gray rounded;
+  }
+
+  /* Auth page animations */
+  .auth-float {
+    animation: authFloat 6s ease-in-out infinite;
+  }
+
+  .auth-float-delayed {
+    animation: authFloat 8s ease-in-out infinite;
+    animation-delay: 2s;
+  }
+
+  .auth-glow {
+    animation: authGlow 4s ease-in-out infinite alternate;
+  }
+
+  /* Auth pages - no scroll and proper positioning */
+  .auth-page {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .auth-page * {
+    overflow: visible;
+  }
+
+  .auth-page .auth-content {
+    max-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Prevent body scroll when auth pages are active - but don't use fixed positioning */
+  body:has(.auth-page) {
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* Text utilities */
+  .text-gradient {
+    @apply bg-gradient-to-r from-theme-primary to-theme-primary-dark bg-clip-text text-transparent;
+  }
+
+  /* Line clamp utilities */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+}
+
+@layer utilities {
+  /* Custom utilities for OursBook layouts */
+  .container-oursbook {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-spacing {
+    @apply py-6 md:py-8 lg:py-12 xl:py-16;
+  }
+
+  .carousel-spacing {
+    @apply mb-8 md:mb-12 lg:mb-16;
+  }
+
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .animate-card-expand {
+    animation: cardExpand 0.3s ease-out forwards;
+  }
+
+  .animate-card-collapse {
+    animation: cardCollapse 0.3s ease-in forwards;
+  }
+}
+
+/* Custom CSS variables for dynamic animations */
+:root {
+  --scroll-from: 0px;
+  --scroll-to: -300px;
+}
+
+/* Focus styles for accessibility */
+.focus-visible:focus {
+  @apply outline-none ring-2 ring-theme-primary ring-offset-2 ring-offset-theme-black;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
